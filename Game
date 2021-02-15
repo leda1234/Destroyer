@@ -1,0 +1,405 @@
+import turtle
+import time
+
+# Add Graphics
+
+turtle.register_shape('destroyer.gif')
+turtle.register_shape('carrier.gif')
+turtle.register_shape('bullet_s.gif')
+turtle.register_shape('Bullet_5.gif')
+turtle.register_shape('bullet_w.gif')
+turtle.register_shape('Bullet_8.gif')
+
+wn = turtle.Screen()
+wn.title("2 Player Game")
+wn.bgcolor('pink')
+wn.setup(1366, 768)
+wn.tracer(0)
+wn.bgpic('Background.gif')
+
+# Healths
+
+health = 100
+Health = 100
+
+# Writings
+
+pen = turtle.Turtle()
+pen.speed(0)
+pen.shape("triangle")
+pen.color("red")
+pen.penup()
+pen.hideturtle()
+pen.goto(550, 330)
+pen.write("Health: 100", align='center', font=('College', 30, 'bold'))
+
+Pen = turtle.Turtle()
+Pen.speed(0)
+Pen.shape("triangle")
+Pen.color("red")
+Pen.penup()
+Pen.hideturtle()
+Pen.goto(-550, -330)
+Pen.write("Health: 100", align='center', font=('College', 30, 'bold'))
+
+PEN = turtle.Turtle()
+PEN.speed(0)
+PEN.shape("triangle")
+PEN.color("orange")
+PEN.penup()
+PEN.hideturtle()
+PEN.goto(0, 0)
+
+# player_1
+
+ship = turtle.Turtle()
+ship.speed(0)
+ship.shape('destroyer.gif')
+ship.color('pink')
+ship.penup()
+ship.goto(0, -300)
+ship.direction = 'stop'
+
+p = ship.xcor()
+q = ship.ycor()
+
+# player_1_weapons
+
+bullet = turtle.Turtle()
+bullet.speed(0)
+bullet.shape('bullet_s.gif')
+bullet.color('white')
+bullet.penup()
+bullet.goto(p, q)
+bullet.shapesize(0.8, 0.8)
+bullet.direction = 'stop'
+bullet.setheading(90)
+bullet.hideturtle()
+
+bulletspeed = 5
+
+bulletstate = 'ready'
+
+bullet_w = turtle.Turtle()
+bullet_w.speed(0)
+bullet_w.shape('bullet_w.gif')
+bullet_w.color('blue')
+bullet_w.penup()
+bullet_w.goto(p, q)
+bullet_w.direction = 'stop'
+bullet_w.setheading(90)
+bullet_w.hideturtle()
+
+bullet_wspeed = 2
+
+bullet_wstate = 'ready'
+
+# player_2
+
+SHIP = turtle.Turtle()
+SHIP.speed(0)
+SHIP.shape("carrier.gif")
+SHIP.color('green')
+SHIP.penup()
+SHIP.goto(0, 300)
+SHIP.direction = 'stop'
+
+P = SHIP.xcor()
+Q = SHIP.ycor()
+
+# player_2_weapons
+
+Bullet = turtle.Turtle()
+Bullet.speed(0)
+Bullet.shape('Bullet_5.gif')
+Bullet.color('purple')
+Bullet.penup()
+Bullet.goto(P, Q)
+Bullet.shapesize(0.8, 0.8)
+Bullet.direction = 'stop'
+Bullet.setheading(270)
+Bullet.hideturtle()
+
+Bulletspeed = 5
+
+Bulletstate = 'ready'
+
+Bullet_8 = turtle.Turtle()
+Bullet_8.speed(0)
+Bullet_8.shape('Bullet_8.gif')
+Bullet_8.color('red')
+Bullet_8.penup()
+Bullet_8.goto(P, Q)
+Bullet_8.direction = 'stop'
+Bullet_8.hideturtle()
+
+Bullet_8speed = 2
+
+Bullet_8state = 'ready'
+
+
+# movement_of_players
+
+def go_left():
+    ship.direction = 'left'
+
+
+def go_right():
+    ship.direction = 'right'
+
+
+def Go_left():
+    SHIP.direction = 'left'
+
+
+def Go_right():
+    SHIP.direction = 'right'
+
+
+# movement
+
+def move():
+    if ship.direction == 'left':
+        x = ship.xcor()
+        ship.setx(x - 0.75)
+
+    if ship.direction == 'right':
+        x = ship.xcor()
+        ship.setx(x + 0.75)
+
+    if bullet.direction == 'up':
+        a = bullet.ycor()
+        bullet.sety(a + 1)
+
+    if bullet_w.direction == 'up':
+        a = bullet_w.ycor()
+        bullet_w.sety(a + 1)
+
+
+def MOVE():
+    if SHIP.direction == 'left':
+        x = SHIP.xcor()
+        SHIP.setx(x - 0.75)
+
+    if SHIP.direction == 'right':
+        x = SHIP.xcor()
+        SHIP.setx(x + 0.75)
+
+    if Bullet.direction == 'down':
+        a = Bullet.ycor()
+        Bullet.sety(a - 1)
+
+    if Bullet_8.direction == 'down':
+        a = Bullet_8.ycor()
+        Bullet_8.sety(a - 1)
+
+
+# movement of bullets
+
+def fire():
+    global bulletstate
+
+    if bulletstate == 'ready':
+        bulletstate = 'fire'
+
+    x = ship.xcor()
+    y = ship.ycor() + 10
+    bullet.goto(x, y)
+    bullet.showturtle()
+
+
+def fire_w(bulletstate=None):
+    global bullet_wstate
+
+    if bulletstate == 'ready':
+        bulletstate = 'fire'
+
+    x = ship.xcor()
+    y = ship.ycor() + 10
+    bullet_w.goto(x, y)
+    bullet_w.showturtle()
+
+
+def Fire():
+    global Bulletstate
+
+    if Bulletstate == 'ready':
+        Bulletstate = 'fire'
+
+    x = SHIP.xcor()
+    y = SHIP.ycor() - 10
+    Bullet.goto(x, y)
+    Bullet.showturtle()
+
+
+def Fire_8():
+    global Bullet_8state
+
+    if Bullet_8state == 'ready':
+        Bullet_8state = 'fire'
+
+    x = SHIP.xcor()
+    y = SHIP.ycor() - 10
+    Bullet_8.goto(x, y)
+    Bullet_8.showturtle()
+
+
+def isCollision(a, b):
+    distance = (((a.xcor() - b.xcor()) ** 2) + ((a.ycor() - b.ycor()) ** 2)) ** (1 / 2)
+    if distance < 15:
+        return True
+    else:
+        return False
+
+
+# Controls
+
+wn.listen()
+wn.onkeypress(go_left, 'a')
+wn.onkeypress(go_right, 'd')
+wn.onkeypress(Go_left, '4')
+wn.onkeypress(Go_right, '6')
+wn.onkeypress(fire, 's')
+wn.onkeypress(fire_w, 'w')
+wn.onkeypress(Fire, '5')
+wn.onkeypress(Fire_8, '8')
+
+while True:
+
+    wn.update()
+    move()
+    MOVE()
+
+    # movement of bullets player 1
+
+    if bulletstate == 'fire':
+        y = bullet.ycor()
+        y += bulletspeed
+        bullet.sety(y)
+
+    if bullet.ycor() > 330:
+        bullet.hideturtle()
+        bulletstate = 'ready'
+
+    if bullet_wstate == 'fire':
+        y = bullet_w.ycor()
+        y += bullet_wspeed
+        bullet_w.sety(y)
+
+    if bullet_w.ycor() > 330:
+        bullet_w.hideturtle()
+        bullet_wstate = 'ready'
+
+    # movement of bullets player 2
+
+    if Bulletstate == 'fire':
+        y = Bullet.ycor()
+        y -= Bulletspeed
+        Bullet.sety(y)
+
+    if Bullet.ycor() < -330:
+        Bullet.hideturtle()
+        Bulletstate = 'ready'
+
+    if Bullet_8state == 'fire':
+        y = Bullet_8.ycor()
+        y -= Bullet_8speed
+        Bullet_8.sety(y)
+
+    if Bullet_8.ycor() < -330:
+        Bullet_8.hideturtle()
+        Bullet_8state = 'ready'
+
+    # Shot
+
+    if isCollision(bullet, SHIP):
+        bullet.hideturtle()
+        bulletstate = 'ready'
+        bullet.goto(0, -400)
+
+        Health -= 10
+
+        if Health <= 0:
+            Health = 0
+
+        pen.clear()
+        pen.write('Health: {}'.format(Health), align='center', font=('College', 30, 'bold'))
+
+    if isCollision(bullet_w, SHIP):
+        bullet_w.hideturtle()
+        bullet_wstate = 'ready'
+        bullet_w.goto(0, -400)
+
+        Health -= 20
+
+        if Health <= 0:
+            Health = 0
+
+        pen.clear()
+        pen.write('Health: {}'.format(Health), align='center', font=('College', 30, 'bold'))
+
+    if isCollision(Bullet, ship):
+        Bullet.hideturtle()
+        Bulletstate = 'ready'
+        Bullet.goto(0, 400)
+
+        health -= 10
+
+        if health <= 0:
+            health = 0
+
+        Pen.clear()
+        Pen.write('Health: {}'.format(health), align='center', font=('College', 30, 'bold'))
+
+    if isCollision(Bullet_8, ship):
+        Bullet_8.hideturtle()
+        Bullet_8state = 'ready'
+        Bullet_8.goto(0, 400)
+
+        health -= 20
+
+        if health <= 0:
+            health = 0
+
+        Pen.clear()
+        Pen.write('Health: {}'.format(health), align='center', font=('Courier', 15, 'normal'))
+
+    # collision of bullets
+
+    if isCollision(bullet, Bullet):
+        bullet.hideturtle()
+        Bullet.hideturtle()
+
+        bulletstate = 'ready'
+        Bulletstate = 'ready'
+
+        bullet.goto(0, -400)
+        Bullet.goto(0, 400)
+
+    if isCollision(bullet_w, Bullet_8):
+        bullet_w.hideturtle()
+        Bullet_8.hideturtle()
+
+        bullet_wstate = 'ready'
+        Bullet_8state = 'ready'
+
+        bullet_w.goto(0, -400)
+        Bullet_8.goto(0, 400)
+
+    # health tracker
+
+    if Health <= 0:
+        ship.hideturtle()
+        SHIP.hideturtle()
+
+        PEN.write("PLAYER 1 WINS!", align='center', font=('College', 60, 'normal'))
+        time.sleep(10)
+        break
+
+    if health <= 0:
+        ship.hideturtle()
+        SHIP.hideturtle()
+
+        PEN.write("PLAYER 2 WINS!", align='center', font=('College', 60, 'normal'))
+        time.sleep(10)
+        break
