@@ -76,7 +76,7 @@ bullet.direction = 'stop'
 bullet.setheading(90)
 bullet.hideturtle()
 
-bulletspeed = 5
+bulletspeed = 12
 
 bulletstate = 'ready'
 
@@ -90,7 +90,7 @@ bullet_w.direction = 'stop'
 bullet_w.setheading(90)
 bullet_w.hideturtle()
 
-bullet_wspeed = 2
+bullet_wspeed = 12
 
 bullet_wstate = 'ready'
 
@@ -120,7 +120,7 @@ Bullet.direction = 'stop'
 Bullet.setheading(270)
 Bullet.hideturtle()
 
-Bulletspeed = 5
+Bulletspeed = 12
 
 Bulletstate = 'ready'
 
