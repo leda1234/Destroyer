@@ -1,4 +1,4 @@
-# Destroyer
+# Destroyer - Two Player Game Design
 Two player game entitled: 'Destroyer'
 
 'Destroyer' is a two player game, with two bombs assigned to each player, the goal 
